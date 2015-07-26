@@ -1,0 +1,10 @@
+package com.atom.android.booklist.contants;
+
+public class GCConstant {
+
+		public static  final int LOGIN_ID = 1001;
+		public static  final int LOGIN_SessionID_ID1 = 1002;
+		public static  final int LOGIN_SessionID_ID2 = 1003;
+		public static  final int LOGIN_INSTALL = 1004;
+		public static  final int LOGIN_INSTALL_DOWNLOAD = 1005;
+}

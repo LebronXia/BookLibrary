@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_gray"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+            android:background="@color/item_white"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:paddingLeft="18dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:textSize="14sp"
+                android:layout_marginRight="5dp"
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="排序:" />
+
+            <RadioGroup
+                android:id="@+id/orderButtons_RG"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content" 
+				android:layoutMode="opticalBounds">
+
+
+                <RadioButton
+                    android:id="@+id/orderByName_RB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+               		android:textSize="12sp"
+                    android:textColor="@color/contexttext_gray"
+                    android:button="@null"
+                    android:text="名称" />
+
+                <RadioButton
+                    android:layout_marginLeft="8dp"
+                    android:id="@+id/orderByPublish_RB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                	android:textSize="12sp"
+                    android:textColor="@color/contexttext_gray"
+                    android:button="@null"
+                    android:text="出版日" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="查看：" />
+
+            <ImageButton
+                android:layout_marginLeft="8dp"
+                android:scaleType="centerInside"
+                android:background="@color/transparent"
+                android:id="@+id/listWithPics_IB"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/list_with_pics" />
+
+            <ImageButton
+                android:layout_marginLeft="10dp"
+                android:scaleType="centerInside"
+                android:background="@color/transparent"
+                android:id="@+id/listWithoutPics_IB"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/list_without_pics_off" />
+        </LinearLayout>
+
+
+</LinearLayout>

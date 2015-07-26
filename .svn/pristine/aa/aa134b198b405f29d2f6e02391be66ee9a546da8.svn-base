@@ -1,0 +1,8 @@
+package com.atom.android.booklist.config;
+
+public class URL {
+	public static String WebSite="http://192.168.199.104/IcezeWB/";
+	
+	
+	public static String hello3 = "hello3"; 
+}

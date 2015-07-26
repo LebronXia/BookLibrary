@@ -1,0 +1,160 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   		xmlns:tools="http://schemas.android.com/tools"
+    	android:layout_width="match_parent"
+    	android:layout_height="174dp"
+    	android:orientation="vertical"
+    >
+
+<LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="126dp"
+        android:background="@color/background_green"
+        android:orientation="horizontal" >
+
+        <!-- 第一部分 -->
+        <LinearLayout
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+			<!-- 显示用户名 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/textViewAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/txt_gray"
+                    android:text="user123" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/textViewAccount"
+                    android:textColor="@color/txt_gray"
+                    android:text=",你读过" />
+            </RelativeLayout>
+
+            <!-- 显示历史读书数量 -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="78dp"
+                android:layout_gravity="center" >
+
+                <TextView
+                    android:id="@+id/textViewBookamount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/txt_gray"
+                    android:layout_marginBottom="14dp"
+                    android:text="18"
+                    android:textSize="60dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/txt_gray"
+                    android:layout_toRightOf="@id/textViewBookamount"
+                    android:layout_marginTop="40dp"
+                    android:text="本书" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:background="#FFFFFF" />
+        <!-- 第二部分空白 -->
+        <LinearLayout 
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            >           
+        </LinearLayout>
+        
+        <!-- 第三部分 -->
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <!-- 图标 -->
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                >
+                
+                <ImageButton
+                    android:id="@+id/buttonSet"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/settings" />
+                
+                <ImageButton
+                    android:id="@+id/buttonNotify"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/message" />
+
+            </LinearLayout>
+            
+            <!-- 逾期记录 -->
+            <RelativeLayout 
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+
+                >
+                <TextView 
+                   android:id="@+id/textViewOverdue"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textColor="@color/txt_gray"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginRight="20dp"
+                   android:layout_marginTop="10dp"
+                   android:text="0次"
+                    />
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/txt_gray"
+                    android:layout_below="@id/textViewOverdue"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="逾期记录"
+                    />
+                                
+            </RelativeLayout>
+            
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout 
+	    android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:layout_marginBottom="2dp"
+		android:orientation="horizontal"
+	   
+	    >
+	    <ImageView 
+	        android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+	        android:layout_marginLeft="24dp"
+	        android:src="@drawable/up"
+	        />
+	    <TextView 
+	        android:id="@+id/tv_brrowed_book"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_marginLeft="8dp"
+	        android:text="一周内归还(x)"
+	         android:textSize="18sp"/>	    
+	</LinearLayout>
+</LinearLayout>

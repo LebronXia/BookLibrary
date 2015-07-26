@@ -1,0 +1,61 @@
+package com.atom.android.booklist.view;
+
+import com.atom.android.booklist.R;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+public class TitleBar extends LinearLayout{
+	private Context mContext;
+	private ImageView mBarLogo;
+	private TextView mTitle;
+	private TextView mTitleAll;
+	private LinearLayout mTitle_bar_layout;
+	
+	public TitleBar(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		// TODO Auto-generated constructor stub
+		mContext = context;
+		init();
+	}
+
+	public TitleBar(Context context) {
+		super(context);
+		mContext = context;
+		// TODO Auto-generated constructor stub
+		init();
+	}
+	private void init() {
+		// TODO Auto-generated method stub
+		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		inflater.inflate(R.layout.title_bar, this);
+		mBarLogo = (ImageView) findViewById(R.id.imag_title_logo);
+		mTitle = (TextView) findViewById(R.id.tv_title);
+		mTitleAll = (TextView) findViewById(R.id.tv_alltitles);
+		mTitle_bar_layout = (LinearLayout) findViewById(R.id.title_bar_layout);
+	}
+	public void setLogo(int Res){
+		mBarLogo.setImageResource(Res);
+	}
+	
+	public void setBookNum(int a){
+		mTitle.setText(mTitle.getText() +"(" +Integer.toString(a) + ")");
+	}
+	
+	public void setTitle(int title){
+		mTitle.setText(title);
+	}
+	
+	public void setAllTitle(String alltitle){
+		mTitleAll.setText(alltitle);
+	}
+	
+
+	
+	
+
+}

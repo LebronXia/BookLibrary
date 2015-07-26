@@ -1,0 +1,123 @@
+package com.atom.android.booklist.fragments;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONObject;
+
+import com.atom.android.booklist.R;
+import com.atom.android.booklist.contants.GCConstant;
+import com.atom.android.booklist.interfaces.OnTaskListener;
+import com.atom.android.booklist.utils.NetUtils;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class LoginFragment extends Fragment implements OnTaskListener{
+	
+	private final static String TAG = "LoginFragment";
+	private EditText etAccount;
+	private EditText etPassword;
+	private Button btLogin;
+	private LoginFragment m;
+	private Context mContext;
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		
+	}
+	public LoginFragment(Context pContext) {
+		mContext = pContext;
+		m = this;
+    }
+	
+
+	@Override
+	public View onCreateView(LayoutInflater inflater,
+			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		View view = inflater.inflate(R.layout.fragment_login, container,false);
+		initView(view);
+		initOnclick();
+		return view;
+	}
+
+	private void initView(View view) {
+		// TODO Auto-generated method stub
+		etAccount = (EditText) view.findViewById(R.id.account);
+		etPassword = (EditText) view.findViewById(R.id.password);
+		btLogin = (Button) view.findViewById(R.id.login);
+	}
+	
+	private void initOnclick() {
+		// TODO Auto-generated method stub
+		btLogin.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				String account = etAccount.getText().toString();
+				String password = etPassword.getText().toString();
+				NetUtils nu = new NetUtils();
+				nu.setmOnTaskListener(m);
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("account", account);
+				map.put("password", password);
+				try {
+					 nu.post(map, GCConstant.LOGIN_ID, "http://192.168.2.23:8080/WebTest/login");
+					 Log.d(TAG, "success ·¢ËÍ----------");
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		});
+	}
+	@Override
+	public void onLoading(int taskflag, long total, long current) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSuccess(Object obj, int taskflag) {
+		// TODO Auto-generated method stub
+		
+		String json = obj.toString();
+		try {
+			switch(taskflag){
+			case GCConstant.LOGIN_ID:
+				deal(json);
+				break;}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
+	
+
+	@Override
+	public void onFailure(Throwable throwable, String s, Object obj) {
+		// TODO Auto-generated method stub
+		Log.d(TAG, "Ê§°Ü--------");
+	}
+	
+	private void deal(String json) {
+		// TODO Auto-generated method stub
+		Log.d(TAG, "³É¹¦-----------");
+		int resultId = jo.get
+		if()
+		
+				
+	}
+
+
+}
