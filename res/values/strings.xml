@@ -9,6 +9,8 @@
 	<string name="borrow_history">以往借阅记录</string>
 	<string name="my_favorite">我的收藏</string>
 	<string name="serch_result">搜索结果</string>
+	<string name="broowed_date">借出日</string>
+	<string name="collect_date">收藏日期</string>
 	<drawable name="login_normal">#74c629</drawable>
 	<drawable name="login_pressed">#5fa91c</drawable>
 	<drawable name="search_normal">#28c89c</drawable>

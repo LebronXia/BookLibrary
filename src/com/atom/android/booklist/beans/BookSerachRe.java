@@ -1,6 +1,7 @@
 package com.atom.android.booklist.beans;
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 /**
@@ -23,7 +24,10 @@ public class BookSerachRe implements Serializable{
 	 * 3:什么都没有
 	 */
 	private int flag;
+	private int mUserId;
 	private int mBookId;
+	private int ifCollection;
+	private String collectionDate;
 	private String mBookName;
 	private String mWrite;
 	private String mBookType;
@@ -38,11 +42,24 @@ public class BookSerachRe implements Serializable{
 	private String mBookPublishDate;
 	private String borrowDate;
 	
+	public int getUserId() {
+		return mUserId;
+	}
+	public void setUserId(int userId) {
+		mUserId = userId;
+	}
 	public String getBookPublishDate() {
 		return mBookPublishDate;
 	}
 	public void setBookPublishDate(String bookPublishDate) {
 		mBookPublishDate = bookPublishDate;
+	}
+	
+	public int getIfCollection() {
+		return ifCollection;
+	}
+	public void setIfCollection(int ifCollection) {
+		this.ifCollection = ifCollection;
 	}
 	public String getBorrowDate() {
 		return borrowDate;
@@ -61,6 +78,13 @@ public class BookSerachRe implements Serializable{
 	}
 	public void setReturnDate(String returnDate) {
 		this.returnDate = returnDate;
+	}
+	
+	public String getCollectionDate() {
+		return collectionDate;
+	}
+	public void setCollectionDate(String collectionDate) {
+		this.collectionDate = collectionDate;
 	}
 	public int getFlag() {
 		return flag;

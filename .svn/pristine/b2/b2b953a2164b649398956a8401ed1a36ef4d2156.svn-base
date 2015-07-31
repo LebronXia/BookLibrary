@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_gray"
+    android:orientation="vertical" >
+    	
+    <!-- 图书的信息 -->
+    <LinearLayout 
+        android:id="@+id/ll_bookstatues"
+        android:layout_width="match_parent"
+        android:layout_height="112dp"
+        android:layout_marginLeft="12dp"
+	    android:layout_marginRight="12dp"
+	    android:layout_marginBottom="4dp"
+	    android:layout_marginTop="4dp"
+	    android:background="@drawable/item_shape"
+	    android:orientation="horizontal"
+        >
+        <FrameLayout 
+            android:layout_width="100dp"
+            android:layout_height="112dp"
+            android:layout_marginLeft="8dp"
+            >
+       
+    <com.loopj.android.image.SmartImageView 
+        android:id="@+id/iv_bookpicture"
+        android:layout_width="80dp"
+        android:layout_height="104dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="4dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bookpic"
+        />
+    <TextView 
+           android:id="@+id/tv_showstates"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="4dp"
+           android:layout_marginTop="4dp"
+           android:background="@drawable/shape_yellow_corner"
+           android:paddingTop="2dp"
+           android:paddingBottom="2dp"
+           android:paddingLeft="6dp"
+           android:paddingRight="6dp"
+           android:textSize="10sp"
+           android:textColor="@color/item_white"
+           android:text="已预约"
+           android:visibility="gone"
+           />
+    </FrameLayout>
+    <LinearLayout 
+        android:id="@+id/rl_conent"
+        android:layout_width="match_parent"
+        android:layout_height="112dp"
+        android:layout_marginLeft="16dp"
+        android:orientation="vertical"
+        >
+        
+        <TextView
+            android:id="@+id/tv_booktitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Android应用开发案例教程"
+            android:singleLine="true" 
+			android:ellipsize="end"
+            android:textSize="16sp">           
+        </TextView>
+        
+        <TextView 
+            android:id="@+id/tv_bookauthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="毋建军"/>
+        
+        <TextView 
+            android:id="@+id/tv_publish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="清华大学出版社"
+            />
+        
+        <TextView 
+            android:id="@+id/tv_booknumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="索书号："
+            />
+        
+    </LinearLayout>
+	</LinearLayout>
+	<!-- 四个图片按钮 -->
+	<LinearLayout 
+            android:id="@+id/ll_fourimagebutton"
+	        android:layout_width="match_parent"
+	        android:layout_height="40dp"
+	        android:layout_marginRight="12dp"
+	        android:layout_marginLeft="12dp"
+	        android:layout_marginBottom="4dp"
+	        android:background="@color/txt_gray"	        
+	        android:orientation="horizontal"
+	        android:visibility="gone">
+	        
+	        <ImageButton
+	            android:id="@+id/ib_borrowed"
+	            style="@style/ImageButton"
+	            android:clickable="false"
+	            android:background="@drawable/borrowbuttom_shape"	            	            
+	            />
+	        
+	        <ImageButton
+	            android:id="@+id/ib_return"
+	            style="@style/ImageButton"
+	            android:clickable="false"
+	            android:background="@drawable/returnbutton_shape" 	            	            
+	            />
+	        
+	        <ImageButton
+	            android:id="@+id/ib_order"
+	            style="@style/ImageButton"
+	            android:clickable="false"
+	            android:background="@drawable/orderbutton_shape"	            	            
+	            />
+	        
+	        <ImageButton	            
+	            android:id="@+id/ib_favorate"
+	            style="@style/ImageButton"
+	            android:clickable="false"
+	            android:background="@drawable/favoritebutton_shape"            	            
+	            />        
+	    </LinearLayout>
+</LinearLayout>

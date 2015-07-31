@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>    
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ll_borrowRecordhistory"
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:background="@drawable/item_shape"
@@ -7,17 +8,18 @@
         android:layout_marginLeft="12dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
         <TextView 
             style="@style/TitleTextType"           
             android:text="借阅记录"
             />
         
-        <TextView 
-            android:id="@+id/tv_borrowedhistory"
-            style="@style/ContentTextType"
-            android:text="1.2015.01.20至2015.02.15"
-            />
+        <ListView 
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ></ListView>
         
         <LinearLayout 
             android:layout_width="match_parent"

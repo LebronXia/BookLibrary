@@ -15,9 +15,12 @@ import org.json.JSONObject;
 
 import com.atom.android.booklist.R;
 import com.atom.android.booklist.activity.BrrowedHistoryActivity;
+import com.atom.android.booklist.activity.FravoriteActivity;
+import com.atom.android.booklist.activity.InstallActivity;
 import com.atom.android.booklist.activity.OrderRecordActivity;
 import com.atom.android.booklist.activity.ReadingActivity;
 import com.atom.android.booklist.activity.SearchActivity;
+import com.atom.android.booklist.activity.notifyActivity;
 import com.atom.android.booklist.adapts.BookAdapter;
 import com.atom.android.booklist.adapts.BookwithPicAdapter;
 import com.atom.android.booklist.beans.BookInfo;
@@ -36,6 +39,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,12 +48,13 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 
 
-@SuppressLint("SimpleDateFormat") public class MainFragment extends Fragment implements OnTaskListener{
+public class MainFragment extends BaseFragment implements OnTaskListener,OnClickListener{
 	
 	private static final String TAG = "MainFragment";
 	private View view;
@@ -65,13 +70,15 @@ import android.widget.TextView;
 	//当前借阅的数量
 	private int currentBorrowing = 0;
 	//一周内需要归还的书
-	private List<BookSerachRe> booksReturnInOneW = new ArrayList<BookSerachRe>();
+	private List<BookSerachRe> booksReturnInOneW;
 	//当前借阅的书
-	private List<BookSerachRe> booksInReading = new ArrayList<BookSerachRe>();
+	private List<BookSerachRe> booksInReading;
 	//历史借阅图书
-	private List<BookSerachRe> historyBooks = new ArrayList<BookSerachRe>();
+	private List<BookSerachRe> historyBooks;
 	//预约记录的图书
-	private List<BookSerachRe> OrderBooks = new ArrayList<BookSerachRe>();
+	private List<BookSerachRe> OrderBooks;
+	//收藏图书
+	private List<BookSerachRe> Collections;
 	//用户ID
 	private int userId; 
 	private UserInfo user;
@@ -94,6 +101,8 @@ import android.widget.TextView;
 	private TextView textViewOverdue;
 	private TextView tv_brrowed_book;
 	private Button search_btn_back;
+	private ImageButton ib_buttonSet;
+	private ImageButton ib_buttonnotify;
 	public MainFragment(){
 		m = this;
 	}
@@ -104,10 +113,12 @@ import android.widget.TextView;
 		dbManager = new DBManager(getActivity());
 		user = (UserInfo) getArguments().getSerializable(LoginFragment.EXTRA_USER);
 		userId = user.getUserId();		
-		inithttp();
+		initHttpBorrow();
+		initHttpOrder();
 			
 	}
-    @Override
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -117,9 +128,7 @@ import android.widget.TextView;
 		lv.addHeaderView(headerView);		
 		initTitleBar();		//初始化底部标题栏
 		initView();	
-		//查询图案结果的适配器
-		BookwithPicAdapter bookwithPicAdapter = new BookwithPicAdapter(getActivity(), booksReturnInOneW);
-		lv.setAdapter(bookwithPicAdapter);		
+		
 		return view;		
 	}
 	private void initView() {
@@ -129,6 +138,10 @@ import android.widget.TextView;
 		textViewBookamount = (TextView) view.findViewById(R.id.textViewBookamount);
 		textViewOverdue = (TextView) view.findViewById(R.id.textViewOverdue);		
 		tv_brrowed_book = (TextView) view.findViewById(R.id.tv_brrowed_book);
+		ib_buttonSet = (ImageButton) view.findViewById(R.id.ib_buttonSet);
+		ib_buttonnotify = (ImageButton) view.findViewById(R.id.ib_buttonNotify);
+		ib_buttonSet.setOnClickListener(this);
+		ib_buttonnotify.setOnClickListener(this);
 		search_btn_back = (Button) view.findViewById(R.id.search_btn_back);
 		search_btn_back.setVisibility(View.GONE);
 		textViewAccount.setText(user.getName());
@@ -145,49 +158,45 @@ import android.widget.TextView;
 		});
 		 //隐藏软键盘
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-		
-		
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);		
 	}
 	private void initTitleBar() {
 		// TODO Auto-generated method stub
 		//当前借阅标题栏
 		mBorowedBookTitle = new TitleBar(getActivity());
 		mBorowedBookTitle.setLogo(R.drawable.down);
-		mBorowedBookTitle.setTitle(R.string.borrowed_book);
-		mBorowedBookTitle.setAllTitle("《Android编程权威指南》");		
+		mBorowedBookTitle.setTitle(R.string.borrowed_book);	
 		lv.addFooterView(mBorowedBookTitle);
 		//预约记录标题栏
 		mOrderRecordTitle = new TitleBar(getActivity());
 		mOrderRecordTitle.setLogo(R.drawable.order);
 		mOrderRecordTitle.setTitle(R.string.Order_history);
-		mOrderRecordTitle.setBookNum(5);
-		mOrderRecordTitle.setAllTitle("《Android编程权威指南》");
+		//mOrderRecordTitle.setBookNum(5);
+		//mOrderRecordTitle.setAllTitle("《Android编程权威指南》");
 		lv.addFooterView(mOrderRecordTitle);
 		//以往借阅记录标题栏
 		mBorrowedHistoryTitle = new TitleBar(getActivity());
 		mBorrowedHistoryTitle.setLogo(R.drawable.borrowhistory);
 		mBorrowedHistoryTitle.setTitle(R.string.borrow_history);
-		mBorrowedHistoryTitle.setAllTitle("《Android编程权威指南》");
+		//mBorrowedHistoryTitle.setAllTitle("《Android编程权威指南》");
 		lv.addFooterView(mBorrowedHistoryTitle);
 		
 		//我的收藏
 		mCollectionTitle = new TitleBar(getActivity());
 		mCollectionTitle.setLogo(R.drawable.order);
 		mCollectionTitle.setTitle(R.string.my_favorite);
-		mCollectionTitle.setAllTitle("《Android编程权威指南》");
+		//mCollectionTitle.setAllTitle("《Android编程权威指南》");
 		lv.addFooterView(mCollectionTitle);
 	}
 
-	private void inithttp(){
+	private void initHttpBorrow(){
 	//网络请求
 		NetUtils nu = new NetUtils();
 		nu.setmOnTaskListener(m);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userId", ""+userId);
 		try {
-			nu.post(map,GCConstant.SHOW_BORROWEDBOOKS, URL.WebSite2 + "showBorrowedBooks");
-			
+			nu.post(map,GCConstant.SHOW_BORROWEDBOOKS, URL.WebSite2 + "showBorrowedBooks");			
 			Log.d(TAG, "网络请求发送-----------");
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -195,8 +204,16 @@ import android.widget.TextView;
 		}	
 	}
 	
+    private void initHttpOrder() {
+		// TODO Auto-generated method stub
+    	NetUtils nu = new NetUtils();
+		nu.setmOnTaskListener(m);
+	}
+    
+    //设置标题监听器
 	private void initlistenr() {
 		// TODO Auto-generated method stub
+		//当前借阅
 		mBorowedBookTitle.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
@@ -205,7 +222,7 @@ import android.widget.TextView;
 				startActivity(intent);
 			}
 		});
-		
+		//预约监听
 		mOrderRecordTitle.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -217,6 +234,7 @@ import android.widget.TextView;
 				
 			}
 		});
+		//借出历史监听
 		mBorrowedHistoryTitle.setOnClickListener(new OnClickListener() {					
 			@Override
 			public void onClick(View v) {
@@ -226,13 +244,56 @@ import android.widget.TextView;
 				startActivity(intent);
 			}
 		});
+		//收藏监听
+		mCollectionTitle.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(), FravoriteActivity.class);
+				intent.putExtra(FavoriteFragment.EXTRA_FAVORITE, (Serializable)Collections);
+				startActivity(intent);
+			}
+		});
 	}
+	
+	//界面暂停时将用户保存到本地数据库
 	@Override
 	public void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
 		dbManager.addUserInfo(user);
 	}
+	
+	//设置标题栏显示数据
+	private void setBrrowedData() {
+		// TODO Auto-generated method stub
+		StringBuilder title = new StringBuilder();
+		for(BookSerachRe book : booksInReading){
+			String bookName = "《" + book.getBookName() + "》、";
+			title.append(bookName);
+		}
+		mBorowedBookTitle.setAllTitle(title);			
+	}
+	private void setOrderData(){
+		StringBuilder title = new StringBuilder();
+		for(BookSerachRe book : OrderBooks){
+			String bookName = "《" + book.getBookName() + "》、";
+			title.append(bookName);
+		}
+		mOrderRecordTitle.setBookNum(OrderBooks.size());
+		mOrderRecordTitle.setAllTitle(title);
+		
+	}
+	private void setCollectData(){
+		StringBuilder title = new StringBuilder();
+		for(BookSerachRe book : Collections){
+			String bookName = "《" + book.getBookName() + "》、";
+			title.append(bookName);
+		}
+		mCollectionTitle.setAllTitle(title);
+	}
+	
 	//activity传输数据给Fragment,不需要让Fragment直接关联activity
 	public static MainFragment newInstance(UserInfo user){
 		Bundle args = new Bundle();
@@ -246,21 +307,29 @@ import android.widget.TextView;
 		// TODO Auto-generated method stub
 		
 	}
+	
+	//成功时返回数据
 	@Override
 	public void onSuccess(Object obj, int taskflag) {
 		// TODO Auto-generated method stub
+		Log.d(TAG,"请求成功进行---222222222222222-----");
 		String json = obj.toString();
 		try {
 			switch (taskflag) {
 			case GCConstant.SHOW_BORROWEDBOOKS:
-				deal(json);
-				textViewBookamount.setText("" + bookhistoryCount);
 				Log.d(TAG,"请求成功进行---222222222222222-----");
+				deal(json);
+				textViewBookamount.setText("" + bookhistoryCount);				
 				textViewOverdue.setText("" + outdayCount + "次");
 				tv_brrowed_book.setText("一周内须归还(" + booksReturnInOneW.size() + ")");
 				mBorowedBookTitle.setBookNum(currentBorrowing);
+				setBrrowedData();
+				setOrderData();
+				setCollectData();
 				initlistenr();		
-
+				//查询图案结果的适配器
+				BookwithPicAdapter bookwithPicAdapter = new BookwithPicAdapter(getActivity(), booksReturnInOneW);
+				lv.setAdapter(bookwithPicAdapter);		
 				break;
 				
 			default:
@@ -272,6 +341,7 @@ import android.widget.TextView;
 		}
 		
 	}
+
 
 	private void deal(String json) {
 		// TODO Auto-generated method stub
@@ -288,6 +358,7 @@ import android.widget.TextView;
 				bookhistoryCount = jo2.getInt("bookhistoryCount");
 				//解析以往借阅记录
 				JSONArray jsonArray1 = jo2.getJSONArray("historyBooks");
+				historyBooks = new ArrayList<BookSerachRe>();
 				Log.d(TAG, jsonArray1+ "以往借阅记录------------");
 				for(int i = 0; i < jsonArray1.length(); i++){
 					JSONObject jo3 = jsonArray1.getJSONObject(i);
@@ -308,6 +379,7 @@ import android.widget.TextView;
 				}
 				//解析一周内须归还的书记录
 				JSONArray jsonArray2 = jo2.getJSONArray("booksReturnInOneW");
+				booksReturnInOneW = new ArrayList<BookSerachRe>();
 				Log.d(TAG, jsonArray2+ "一周内须归还的书记录------------");
 				for(int i = 0; i < jsonArray2.length(); i++){
 					Log.d(TAG, "一周内须归还的书记录");
@@ -328,6 +400,7 @@ import android.widget.TextView;
 				}
 				//解析当前借阅
 				JSONArray jsonArray3 = jo2.getJSONArray("booksInReading");
+				booksInReading = new ArrayList<BookSerachRe>();
 				for(int i = 0; i <jsonArray3.length(); i++){
 					JSONObject jo5 = jsonArray3.getJSONObject(i);
 					JSONObject jo8 = jo5.getJSONObject("book");
@@ -346,6 +419,7 @@ import android.widget.TextView;
 				}		
 				//预约记录
 				JSONArray jsonArray4 = jo2.getJSONArray("orderBookRecords");
+				OrderBooks = new ArrayList<BookSerachRe>();
 				for(int i = 0; i < jsonArray4.length(); i++){
 					Log.d(TAG, "我来到预约了----");
 					JSONObject orderJsons = jsonArray4.getJSONObject(i);
@@ -358,12 +432,35 @@ import android.widget.TextView;
 					bookSerachRe.setBookPublish(orderBook.getString("bookPublish"));
 					bookSerachRe.setBookNumber(orderBook.getString("bookNumber"));
 					bookSerachRe.setBookImageUrl(orderBook.getString("bookImage"));
+					bookSerachRe.setBookPublishDate(orderBook.getString("bookPublishDate"));
 					bookSerachRe.setFlag(orderJsons.getInt("flag"));
 					Log.d(TAG, bookSerachRe.getFlag() + "解析当前借阅标志");
 					bookSerachRe.setReturnDate(orderJsons.getString("returnDate"));
 					bookSerachRe.setReturnCount(orderJsons.getInt("returnCount"));
 					OrderBooks.add(bookSerachRe);
 				}
+				//解析我的收藏
+				JSONArray jsonArray5 = jo2.getJSONArray("collectBookRecords");
+				Collections = new ArrayList<BookSerachRe>();
+				for(int i = 0; i <jsonArray5.length(); i++){
+					JSONObject collectBooklist = jsonArray5.getJSONObject(i);
+					JSONObject collectBook = collectBooklist.getJSONObject("book");
+					BookSerachRe bookSerachRe = new BookSerachRe();
+					bookSerachRe.setBookId(collectBook.getInt("bookId"));
+					bookSerachRe.setBookName(collectBook.getString("bookName"));
+					Log.d(TAG, bookSerachRe.getBookName() + "解析我的收藏-----------");
+					bookSerachRe.setWrite(collectBook.getString("writer"));
+					bookSerachRe.setBookPublish(collectBook.getString("bookPublish"));
+					bookSerachRe.setBookNumber(collectBook.getString("bookNumber"));
+					bookSerachRe.setBookImageUrl(collectBook.getString("bookImage"));
+					bookSerachRe.setFlag(collectBooklist.getInt("flag"));	
+					Log.d(TAG, bookSerachRe.getFlag() + "解析我的收藏");
+					bookSerachRe.setCollectionDate(collectBooklist.getString("collectionDate"));
+					bookSerachRe.setReturnDate(collectBooklist.getString("returnDate"));
+					bookSerachRe.setReturnCount(collectBooklist.getInt("returnCount"));
+					bookSerachRe.setIfCollection(collectBooklist.getInt("ifCollect"));
+					Collections.add(bookSerachRe);
+				}		
 			}			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -375,6 +472,20 @@ import android.widget.TextView;
 	public void onFailure(Throwable throwable, String s, Object obj) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.ib_buttonSet:
+			openActivity(InstallActivity.class);			
+			break;
+		case R.id.ib_buttonNotify:
+			openActivity(notifyActivity.class);
+
+		default:
+			break;
+		}
 	}
 
 }

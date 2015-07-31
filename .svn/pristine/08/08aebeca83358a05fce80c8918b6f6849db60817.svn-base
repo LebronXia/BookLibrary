@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_shape"
+    android:layout_marginRight="12dp"
+    android:layout_marginLeft="12dp"
+    android:layout_marginTop="8dp"
+    android:orientation="vertical" >
+    
+    <TextView 
+        style="@style/TitleTextType"
+        android:text="馆藏信息"
+        />
+    
+    <TextView 
+        android:id="@+id/tv_inrest"
+        style="@style/ContentTextType"
+        android:text="当前在架：  1本"       
+        />
+    
+    <TextView 
+        android:id="@+id/tv_booktype"
+        style="@style/ContentTextType"
+        android:text="文献类型 : 图书"       
+        />
+    
+    <TextView 
+        android:id="@+id/tv_language"
+        style="@style/ContentTextType"
+        android:text="语种 : 中文"       
+        />
+    
+    <TextView 
+        android:id="@+id/tv_bookisbn"
+        style="@style/ContentTextType"
+        android:text="ISBN: 978-121-19485-6"       
+        />
+    
+    <TextView 
+        android:id="@+id/tv_bookprice"
+        style="@style/ContentTextType"
+        android:text="价格： 99"       
+        />
+
+    <TextView 
+        android:id="@+id/tv_pricebook"
+        style="@style/ContentTextType"        
+        android:ellipsize="end"
+        android:singleLine="false"
+        android:maxLines="4"
+        android:text="内容提要：权威、全面、实用、易懂，是本书最大的特色。本书根据美国大名鼎鼎的Big Nerd Ranch训练营的Android培训讲义编写而成，已经为微软、谷歌、Facebook等行业巨头培养了众多专业人才。作者巧妙地把Android开发所需的庞杂知识、行业实践、编程规范等融入一本书中，通过精心编排的应用示例、循序渐进的内容组织，以及循循善诱的语言，深入地讲解了Android开发的方方面面。如果学完一章之后仍然意犹未尽，那“挑战练习”一定会让你大呼过瘾。本书之所以能在移动应用开发类图书中脱颖而出，还在于它真的是在与读者“对话”。阅读本书就好像有一位私人导师在你身边随时为你答疑解惑。"       
+        />
+    
+    <TextView 
+        style="@style/ContentTextType" 
+        android:text="图书目录："
+        />
+    
+    <TextView 
+        android:id="@+id/tv_bookcontents"
+        style="@style/ContentTextType" 
+        android:text="第一章：Android应用与开发环境"
+        />
+
+</LinearLayout>

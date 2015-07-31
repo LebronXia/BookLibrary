@@ -5,16 +5,21 @@
     android:background="@color/background_gray"
     android:orientation="vertical" >
     	
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"
+	    android:layout_marginLeft="12dp"
+	    android:layout_marginBottom="4dp"
+	    android:layout_marginTop="4dp"
+	    android:background="@drawable/item_shape"
+        android:orientation="vertical"
+        >
     <!-- 图书的信息 -->
     <LinearLayout 
         android:id="@+id/ll_bookstatues"
         android:layout_width="match_parent"
         android:layout_height="112dp"
-        android:layout_marginLeft="12dp"
-	    android:layout_marginRight="12dp"
-	    android:layout_marginBottom="4dp"
-	    android:layout_marginTop="4dp"
-	    android:background="@drawable/item_shape"
 	    android:orientation="horizontal"
         >
         <FrameLayout 
@@ -62,6 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Android应用开发案例教程"
+            android:singleLine="true" 
+			android:ellipsize="end"
             android:textSize="16sp">           
         </TextView>
         
@@ -94,13 +101,10 @@
 	<LinearLayout 
             android:id="@+id/ll_fourimagebutton"
 	        android:layout_width="match_parent"
-	        android:layout_height="40dp"
-	        android:layout_marginRight="12dp"
-	        android:layout_marginLeft="12dp"
-	        android:layout_marginBottom="4dp"
-	        android:background="@color/txt_gray"	        
+	        android:layout_height="40dp"	        
+	        android:background="@color/darkgray"	        
 	        android:orientation="horizontal"
-	        android:visibility="gone">
+	        >
 	        
 	        <ImageButton
 	            android:id="@+id/ib_borrowed"
@@ -122,12 +126,17 @@
 	            android:clickable="false"
 	            android:background="@drawable/orderbutton_shape"	            	            
 	            />
-	        
+  
 	        <ImageButton	            
 	            android:id="@+id/ib_favorate"
 	            style="@style/ImageButton"
 	            android:clickable="false"
-	            android:background="@drawable/favoritebutton_shape"            	            
-	            />        
+	            android:background="@drawable/favoritebutton_shape" 
+	            
+	            		                                  	            
+	            /> 
+       
+	            	            
 	    </LinearLayout>
+	</LinearLayout>
 </LinearLayout>

@@ -58,6 +58,25 @@
             android:label="@string/app_name">
             
         </activity>
+        <activity android:name="com.atom.android.booklist.activity.InstallActivity"
+            android:label="@string/app_name">
+            
+        </activity>
+        <activity android:name="com.atom.android.booklist.activity.UpdatePasswordActivity"
+            android:label="@string/app_name">
+            
+        </activity>
+        <activity android:name="com.atom.android.booklist.activity.DetailActivity"
+            android:label="@string/app_name">
+            
+        </activity>
+        <activity android:name="com.atom.android.booklist.activity.FravoriteActivity">
+            
+        </activity>
+        <activity android:name="com.atom.android.booklist.activity.notifyActivity"
+            android:label="@string/app_name"></activity>
     </application>
+    
+ 
 
 </manifest>

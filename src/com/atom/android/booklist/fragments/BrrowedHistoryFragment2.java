@@ -1,6 +1,8 @@
 package com.atom.android.booklist.fragments;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,6 +17,7 @@ import org.json.JSONObject;
 import com.atom.android.booklist.R;
 import com.atom.android.booklist.R.string;
 import com.atom.android.booklist.activity.BrrowedHistoryActivity;
+import com.atom.android.booklist.activity.SearchActivity;
 import com.atom.android.booklist.beans.BookSerachRe;
 import com.atom.android.booklist.beans.UserInfo;
 import com.atom.android.booklist.config.URL;
@@ -38,12 +41,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
-public class BrrowedHistoryFragment2 extends Fragment implements OnTaskListener{
+public class BrrowedHistoryFragment2 extends Fragment implements OnTaskListener,OnClickListener{
 	private View view;
 	private DatePicker datePicker;//日期选择控件
 	private AlertDialog alert;//对话框
@@ -51,12 +55,19 @@ public class BrrowedHistoryFragment2 extends Fragment implements OnTaskListener{
 	private RadioButton mRadio1,mRadio2,mRadio3;
 	private TextView tv_startdate,tv_enddate;
 	private Button bt_searchbutton;
+	//顶部标题栏右边的后腿
+	private ImageView titlebar_iv_left;
+	//顶部标题栏的标题
+	private TextView  titlebar_tv;
+	//顶部标题栏右边的搜索
+	private ImageView titlebar_iv_right;
 	private String mStartTime,mEndTime;
 	//历史借阅图书
 	private List<BookSerachRe> historyBooks = new ArrayList<BookSerachRe>();
 	private DBManager dbManager;
 	private UserInfo user;
 	private BrrowedHistoryFragment2 fragment;
+	private static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	private static final String TAG = "BrrowedHistoryFragment2";
 	public BrrowedHistoryFragment2(){
 		fragment = this;
@@ -75,11 +86,28 @@ public class BrrowedHistoryFragment2 extends Fragment implements OnTaskListener{
 		// TODO Auto-generated method stub
 		view = inflater.inflate(R.layout.frag_borreturnhistory2, container, false);		
 		initView();	
+		initData();
 		return view;
 	}
 
+	private void initData() {
+		// TODO Auto-generated method stub
+		Date endTime = new Date();
+		mEndTime = String.format("%tF", endTime);
+		Calendar c = Calendar.getInstance();
+		c.setTime(endTime);
+		c.add(Calendar.MONTH, -6);
+		Date startTime = c.getTime();
+		mStartTime = String.format("%tF", startTime);
+		Log.d(TAG, mEndTime + "&" + mStartTime +"点击了半年-------");
+		tv_startdate.setText(mStartTime);
+		tv_enddate.setText(mEndTime);
+	}
 	private void initView() {
 		// TODO Auto-generated method stub
+		titlebar_tv = (TextView) view.findViewById(R.id.titlebar_tv);
+		titlebar_iv_right = (ImageView) view.findViewById(R.id.titlebar_iv_right);
+		titlebar_iv_left = (ImageView) view.findViewById(R.id.titlebar_iv_left);
 		mRadioGroup = (RadioGroup) view.findViewById(R.id.rg_historyrecord);
 		mRadio1 = (RadioButton) view.findViewById(R.id.rb_halfyearhistory);
 		mRadio2 = (RadioButton) view.findViewById(R.id.rb_allyearhistory);
@@ -87,16 +115,10 @@ public class BrrowedHistoryFragment2 extends Fragment implements OnTaskListener{
 		tv_startdate = (TextView) view.findViewById(R.id.tv_startdate);
 		tv_enddate = (TextView) view.findViewById(R.id.tv_enddate);	
 		bt_searchbutton = (Button) view.findViewById(R.id.bt_searchbutton);
-		bt_searchbutton.setOnClickListener(new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						Log.d(TAG, "你好------------");
-						//查询以往借阅记录
-						initHttp();
-					}
-				});
+		titlebar_tv.setText(R.string.borrow_history);
+		titlebar_iv_right.setOnClickListener(this);
+		titlebar_iv_left.setOnClickListener(this);
+		bt_searchbutton.setOnClickListener(this);
 		//给RidaoFroup设置监听事件
 		mRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
@@ -104,16 +126,7 @@ public class BrrowedHistoryFragment2 extends Fragment implements OnTaskListener{
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				// TODO Auto-generated method stub
 				if(checkedId == mRadio1.getId()){
-					Date endTime = new Date();
-					mEndTime = String.format("%tF", endTime);
-					Calendar c = Calendar.getInstance();
-					c.setTime(endTime);
-					c.add(Calendar.MONTH, -6);
-					Date startTime = c.getTime();
-					mStartTime = String.format("%tF", startTime);
-					Log.d(TAG, mEndTime + "&" + mStartTime +"点击了半年-------");
-					tv_startdate.setText(mStartTime);
-					tv_enddate.setText(mEndTime);
+					initData();
 				} else if (checkedId == mRadio2.getId()){
 					Date endTime = new Date();
 					mEndTime = String.format("%tF", endTime);
@@ -180,7 +193,22 @@ public class BrrowedHistoryFragment2 extends Fragment implements OnTaskListener{
 		Builder builder = new AlertDialog.Builder(getActivity());
 		View v = getActivity().getLayoutInflater()
 				.inflate(R.layout.dialog_date, null);
-		datePicker = (DatePicker) v.findViewById(R.id.dialog_date_datePicker);
+		String date = mTextView.getText().toString().trim();
+		Date sDate;
+		try {
+			sDate = df.parse(date);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(sDate);
+			int year = calendar.get(Calendar.YEAR);
+			int month = calendar.get(Calendar.MONTH);
+			int day = calendar.get(Calendar.DAY_OF_MONTH);
+			datePicker = (DatePicker) v.findViewById(R.id.dialog_date_datePicker);
+			datePicker.init(year, month, day, null);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		builder.setTitle("请选择日期");
 		builder.setView(v);
 		builder.setNegativeButton("取消", null);
@@ -260,6 +288,26 @@ public class BrrowedHistoryFragment2 extends Fragment implements OnTaskListener{
 	public void onFailure(Throwable throwable, String s, Object obj) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.bt_searchbutton:
+			Log.d(TAG, "你好------------");
+			//查询以往借阅记录
+			initHttp();
+			break;
+		case R.id.titlebar_iv_right:
+			Intent intent = new Intent(getActivity(),SearchActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.titlebar_iv_left:
+			getActivity().finish();
+			break;
+		default:
+			break;
+		}
 	}
 	
 	

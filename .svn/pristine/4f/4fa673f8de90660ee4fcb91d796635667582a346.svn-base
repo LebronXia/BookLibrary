@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item >
+	   <selector>
+	    <item android:drawable="@drawable/login_normal"  android:state_pressed="false"/>	        
+	    <item android:drawable="@drawable/login_pressed" android:state_focused="true"/>
+	    <item android:drawable="@drawable/login_pressed" android:state_pressed="true"/>   
+	</selector>
+    </item>
+    <item >
+		 <shape>
+		    <corners android:radius="10dp" />	
+		</shape>
+    </item>
+
+</layer-list>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_gray"
+    android:orientation="vertical" >
+    <include layout="@layout/include_titlebar"/>
+	   <!-- 表格布局 -->
+<TableLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"    
+    android:padding="10dp"
+    android:stretchColumns="1" >
+    
+   <TableRow
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:background="@drawable/shape_top_corner_no_bottom_line"
+       android:padding="10dip"
+       > 
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+           android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:text="账号"/>
+        
+        <TextView
+            android:id="@+id/tv_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           	android:layout_gravity="center_vertical"
+           	android:layout_weight="1"
+           	android:background="@null"
+           	android:text="111"
+           	android:singleLine="true"
+            />
+
+        
+        </TableRow>
+     <!-- 表格布局：第二行 -->  
+        <TableRow  
+            android:layout_width="fill_parent"  
+            android:layout_height="wrap_content"  
+            android:background="@drawable/shape_no_corner_without_bottom"  
+            android:padding="10dip" >  
+            <TextView  
+                android:layout_width="wrap_content"  
+                android:layout_height="wrap_content"  
+                android:layout_gravity="center_vertical"  
+                android:layout_marginRight="10dip"  
+                android:text="密码:" >  
+            </TextView>  
+            <EditText  
+                android:id="@+id/et_inputpassword"  
+                android:layout_width="wrap_content"  
+                android:layout_height="wrap_content"  
+                android:layout_gravity="center_vertical"  
+                android:layout_weight="1"  
+                android:background="@null"  
+                android:hint="填写密码"
+                android:inputType="phone"  
+                android:singleLine="true" >  
+            </EditText>  
+        </TableRow>  
+        <!-- 表格布局：第三行 -->
+	<TableRow
+	     android:layout_width="match_parent"
+		 android:layout_height="wrap_content"
+	     android:background="@drawable/shape_bottom_corner_no_top_line"
+	     android:padding="10dip"
+	    >
+
+		<TextView
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center_vertical"
+		    android:layout_marginRight="10dp"
+		    android:text="确认密码:" />
+	        
+	        <EditText
+	            android:id="@+id/et_Secondpassword"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_vertical"
+	            android:layout_weight="1"
+	            android:background="@null"
+	            android:hint="再次填写确认"
+	            android:singleLine="true"
+	            />
+	        </TableRow>
+    </TableLayout>
+    
+ <Button 
+     android:id="@+id/bt_sure"
+     android:layout_width="136dp"
+     android:layout_height="wrap_content"
+     android:layout_gravity="center"
+     android:background="@drawable/logout_ll_shape"
+     android:text="确认完成"
+     />
+</LinearLayout>

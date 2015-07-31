@@ -32,14 +32,15 @@
                 android:id="@+id/rb_halfyearhistory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="半年内记录"
+                android:text="半年内记录" 
+                android:checked="true"            
                 android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/rb_allyearhistory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="一年内记录"
+                android:text="一年内记录"              
                 android:textSize="16sp" />
 
             <RadioButton

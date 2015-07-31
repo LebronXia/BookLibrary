@@ -52,6 +52,7 @@ public class LoginFragment extends Fragment implements OnTaskListener{
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		Log.d(TAG, "你好-------------");
 		
 	}
 	public LoginFragment(Context pContext) {
@@ -179,11 +180,12 @@ public class LoginFragment extends Fragment implements OnTaskListener{
 	 */
 	private void deal(String json) throws JSONException {
 		// TODO Auto-generated method stub
-		Log.d(TAG, "成功-----------");
+		
 		JSONObject jo = new JSONObject(json);
 		int resultId = jo.getInt("resultId");
 		JSONObject jo1 = jo.getJSONObject("obj");
 		if(resultId == 0){
+			Log.d(TAG, "成功跳转-----------");
 			//当保存密码核对后，保存数据到本地文件
 			if(savePassword.isChecked()){
 				sp.edit().putString(account, password).commit();

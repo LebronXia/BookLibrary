@@ -4,6 +4,7 @@ package com.atom.android.booklist.fragments;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,8 +85,7 @@ public class SearchFragment extends Fragment implements SearchViewListener
     	dbManager = new DBManager(getActivity());
     	user = dbManager.queryUser();
     	Log.d(TAG, user.getName()+"用户的名字");
-    	//user = (UserInfo) getActivity().getIntent().getSerializableExtra(LoginFragment.EXTRA_USER);
-    	bookSerachReslist = new ArrayList<BookSerachRe>();
+    	//user = (UserInfo) getActivity().getIntent().getSerializableExtra(LoginFragment.EXTRA_USER);   	
     }
     
 	@Override
@@ -255,14 +255,16 @@ public class SearchFragment extends Fragment implements SearchViewListener
 				JSONObject jo2 = jo1.getJSONObject("obj");
 				//键为list
 				JSONArray jsonArray1 = jo2.getJSONArray("list");
+				bookSerachReslist = new ArrayList<BookSerachRe>();
 				for(int i = 0; i < jsonArray1.length(); i++){
 					JSONObject jo3 = jsonArray1.getJSONObject(i);
 					JSONObject jo4 = jo3.getJSONObject("book");
 					BookSerachRe bookSerachRe = new BookSerachRe();
-					Log.d(TAG,  "resultId----0000------");
 					String returnDate = jo3.getString("returnDate");
 					int returnCount = jo3.getInt("returnCount");
 					int flag = jo3.getInt("flag");
+					bookSerachRe.setUserId(jo3.getInt("userId"));
+					bookSerachRe.setIfCollection(jo3.getInt("ifCollect"));
 					bookSerachRe.setBookId(jo4.getInt("bookId"));
 					bookSerachRe.setBookName(jo4.getString("bookName"));
 					Log.d(TAG, jo4.getString("bookName") +"+"+ flag + "----0000------");
@@ -275,6 +277,8 @@ public class SearchFragment extends Fragment implements SearchViewListener
 					bookSerachRe.setBookPublish(jo4.getString("bookPublish"));
 					bookSerachRe.setBookPrice(jo4.getInt("bookPrice"));
 					bookSerachRe.setBookImageUrl(jo4.getString("bookImage"));
+					bookSerachRe.setBookPublishDate(jo4.getString("bookPublishDate"));
+					Log.d(TAG, jo4.getString("bookPublishDate")+"出版日");
 					bookSerachReslist.add(bookSerachRe);
 					Log.d(TAG, "解析完毕-------");					
 				}	

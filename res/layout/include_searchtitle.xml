@@ -42,6 +42,8 @@
                     android:checked="true"
                		android:textSize="12sp"
                     android:textColor="@color/contexttext_gray"
+                    android:clickable="true"
+                    android:background="@color/background_green"
                     android:button="@null"
                     android:text="名称" />
 

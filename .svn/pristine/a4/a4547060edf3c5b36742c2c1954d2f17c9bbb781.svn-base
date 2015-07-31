@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <LinearLayout 
+            android:id="@+id/ll_fourimagebutton"
+	        android:layout_width="match_parent"
+	        android:layout_height="40dp"
+	        android:layout_marginRight="12dp"
+	        android:layout_marginLeft="12dp"
+	        android:layout_marginBottom="4dp"
+	        android:background="@color/txt_gray"	        
+	        android:orientation="horizontal"
+	        android:visibility="gone">
+	        
+	        <ImageButton
+	            android:id="@+id/ib_borrowed"
+	            style="@style/ImageButton"
+	            android:clickable="false"
+	            android:background="@drawable/borrowbuttom_shape"	            	            
+	            />
+	        
+	        <ImageButton
+	            android:id="@+id/ib_return"
+	            style="@style/ImageButton"
+	            android:clickable="false"
+	            android:background="@drawable/returnbutton_shape" 	            	            
+	            />
+	        
+	        <ImageButton
+	            android:id="@+id/ib_order"
+	            style="@style/ImageButton"
+	            android:clickable="false"
+	            android:background="@drawable/orderbutton_shape"	            	            
+	            />
+	        
+	        <ImageButton	            
+	            android:id="@+id/ib_favorate"
+	            style="@style/ImageButton"
+	            android:clickable="false"
+	            android:background="@drawable/favoritebutton_shape"            	            
+	            />        
+	    </LinearLayout>
+
+</LinearLayout>

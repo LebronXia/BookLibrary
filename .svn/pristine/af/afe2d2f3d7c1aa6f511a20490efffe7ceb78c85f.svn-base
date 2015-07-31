@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_gray"
+    android:orientation="vertical" >
+    
+    <include layout = "@layout/include_titlebar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="36dp"
+        android:paddingTop="8dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查询借阅历史"
+            android:textColor="@color/contexttext_gray"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/rg_historyrecord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical" >
+
+            <RadioButton
+                android:id="@+id/rb_halfyearhistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="半年内记录" 
+                android:checked="true"              
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rb_allyearhistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="一年内记录"              
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rb_userdefined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自定义"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="从"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_startdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2015.01.01"
+                android:textColor="@color/background_green"
+                android:textSize="16sp" />
+
+            <TextView                
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="到"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_enddate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2015.06.16"
+                android:textColor="@color/background_green"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="56dp"
+            android:orientation="vertical">
+        <Button
+            android:id="@+id/bt_searchbutton"
+            android:layout_width="120dp"
+            android:layout_height="36dp"
+            android:background="#29c198"
+            android:text="查询"
+            android:textColor="@color/item_white" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
